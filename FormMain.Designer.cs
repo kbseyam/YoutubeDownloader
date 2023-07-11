@@ -53,7 +53,7 @@
             // 
             Label1.AutoSize = true;
             Label1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            Label1.Location = new Point(9, 10);
+            Label1.Location = new Point(9, 13);
             Label1.Margin = new Padding(4, 0, 4, 0);
             Label1.Name = "Label1";
             Label1.Size = new Size(46, 20);
@@ -62,9 +62,13 @@
             // 
             // TbURL
             // 
+            TbURL.AutoCompleteCustomSource.AddRange(new string[] { "https://www.youtube.com/watch?v=" });
+            TbURL.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            TbURL.AutoCompleteSource = AutoCompleteSource.CustomSource;
             TbURL.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            TbURL.Location = new Point(119, 7);
+            TbURL.Location = new Point(90, 10);
             TbURL.Margin = new Padding(4, 3, 4, 3);
+            TbURL.MaxLength = 100;
             TbURL.Name = "TbURL";
             TbURL.Size = new Size(638, 26);
             TbURL.TabIndex = 1;
@@ -73,7 +77,7 @@
             // BtnFetch
             // 
             BtnFetch.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnFetch.Location = new Point(646, 54);
+            BtnFetch.Location = new Point(617, 52);
             BtnFetch.Margin = new Padding(4, 3, 4, 3);
             BtnFetch.Name = "BtnFetch";
             BtnFetch.Size = new Size(111, 40);
@@ -88,7 +92,7 @@
             CbVideo.Enabled = false;
             CbVideo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             CbVideo.FormattingEnabled = true;
-            CbVideo.Location = new Point(122, 188);
+            CbVideo.Location = new Point(90, 188);
             CbVideo.Margin = new Padding(4, 3, 4, 3);
             CbVideo.Name = "CbVideo";
             CbVideo.Size = new Size(638, 28);
@@ -101,7 +105,7 @@
             CbAudio.Enabled = false;
             CbAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             CbAudio.FormattingEnabled = true;
-            CbAudio.Location = new Point(122, 232);
+            CbAudio.Location = new Point(90, 232);
             CbAudio.Margin = new Padding(4, 3, 4, 3);
             CbAudio.Name = "CbAudio";
             CbAudio.Size = new Size(638, 28);
@@ -112,7 +116,7 @@
             // 
             BtnDownload.Enabled = false;
             BtnDownload.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnDownload.Location = new Point(650, 284);
+            BtnDownload.Location = new Point(617, 284);
             BtnDownload.Margin = new Padding(4, 3, 4, 3);
             BtnDownload.Name = "BtnDownload";
             BtnDownload.Size = new Size(111, 40);
@@ -154,10 +158,10 @@
             // 
             // ProgressBarDownload
             // 
-            ProgressBarDownload.Location = new Point(9, 357);
+            ProgressBarDownload.Location = new Point(11, 357);
             ProgressBarDownload.Margin = new Padding(4, 3, 4, 3);
             ProgressBarDownload.Name = "ProgressBarDownload";
-            ProgressBarDownload.Size = new Size(748, 27);
+            ProgressBarDownload.Size = new Size(719, 27);
             ProgressBarDownload.Style = ProgressBarStyle.Continuous;
             ProgressBarDownload.TabIndex = 10;
             ProgressBarDownload.Visible = false;
@@ -166,7 +170,7 @@
             // 
             LbStatus.AutoSize = true;
             LbStatus.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LbStatus.Location = new Point(9, 332);
+            LbStatus.Location = new Point(13, 336);
             LbStatus.Margin = new Padding(4, 0, 4, 0);
             LbStatus.Name = "LbStatus";
             LbStatus.Size = new Size(0, 18);
@@ -180,7 +184,7 @@
             // 
             LbPercentage.AutoSize = true;
             LbPercentage.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbPercentage.Location = new Point(355, 392);
+            LbPercentage.Location = new Point(370, 392);
             LbPercentage.Margin = new Padding(4, 0, 4, 0);
             LbPercentage.Name = "LbPercentage";
             LbPercentage.Size = new Size(0, 25);
@@ -190,10 +194,10 @@
             // 
             LbVideoTitle.AutoEllipsis = true;
             LbVideoTitle.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbVideoTitle.Location = new Point(119, 76);
+            LbVideoTitle.Location = new Point(90, 76);
             LbVideoTitle.Margin = new Padding(4, 0, 4, 0);
             LbVideoTitle.Name = "LbVideoTitle";
-            LbVideoTitle.Size = new Size(520, 40);
+            LbVideoTitle.Size = new Size(519, 40);
             LbVideoTitle.TabIndex = 13;
             LbVideoTitle.Visible = false;
             // 
@@ -225,10 +229,10 @@
             // 
             LbChannelName.AutoEllipsis = true;
             LbChannelName.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbChannelName.Location = new Point(119, 54);
+            LbChannelName.Location = new Point(90, 54);
             LbChannelName.Margin = new Padding(4, 0, 4, 0);
             LbChannelName.Name = "LbChannelName";
-            LbChannelName.Size = new Size(520, 18);
+            LbChannelName.Size = new Size(519, 18);
             LbChannelName.TabIndex = 16;
             LbChannelName.Visible = false;
             // 
@@ -238,7 +242,7 @@
             RbVideoAudio.Checked = true;
             RbVideoAudio.Enabled = false;
             RbVideoAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbVideoAudio.Location = new Point(122, 149);
+            RbVideoAudio.Location = new Point(110, 149);
             RbVideoAudio.Margin = new Padding(4, 3, 4, 3);
             RbVideoAudio.Name = "RbVideoAudio";
             RbVideoAudio.Size = new Size(155, 24);
@@ -253,7 +257,7 @@
             RbVideo.AutoSize = true;
             RbVideo.Enabled = false;
             RbVideo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbVideo.Location = new Point(332, 149);
+            RbVideo.Location = new Point(318, 149);
             RbVideo.Margin = new Padding(4, 3, 4, 3);
             RbVideo.Name = "RbVideo";
             RbVideo.Size = new Size(105, 24);
@@ -267,7 +271,7 @@
             RbAudio.AutoSize = true;
             RbAudio.Enabled = false;
             RbAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbAudio.Location = new Point(499, 149);
+            RbAudio.Location = new Point(476, 149);
             RbAudio.Margin = new Padding(4, 3, 4, 3);
             RbAudio.Name = "RbAudio";
             RbAudio.Size = new Size(105, 24);
@@ -281,7 +285,7 @@
             RbCustom.AutoSize = true;
             RbCustom.Enabled = false;
             RbCustom.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbCustom.Location = new Point(665, 149);
+            RbCustom.Location = new Point(634, 149);
             RbCustom.Margin = new Padding(4, 3, 4, 3);
             RbCustom.Name = "RbCustom";
             RbCustom.Size = new Size(82, 24);
@@ -297,7 +301,7 @@
             pictureBox1.BackgroundImageLayout = ImageLayout.None;
             pictureBox1.Enabled = false;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(319, 161);
+            pictureBox1.Location = new Point(304, 161);
             pictureBox1.Margin = new Padding(4, 3, 4, 3);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(132, 132);
@@ -310,7 +314,7 @@
             // 
             lbFetchingInfo.AutoSize = true;
             lbFetchingInfo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbFetchingInfo.Location = new Point(314, 304);
+            lbFetchingInfo.Location = new Point(299, 304);
             lbFetchingInfo.Margin = new Padding(4, 0, 4, 0);
             lbFetchingInfo.Name = "lbFetchingInfo";
             lbFetchingInfo.Size = new Size(142, 20);
@@ -322,7 +326,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(771, 455);
+            ClientSize = new Size(741, 455);
             Controls.Add(lbFetchingInfo);
             Controls.Add(pictureBox1);
             Controls.Add(RbCustom);
