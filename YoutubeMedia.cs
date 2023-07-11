@@ -1,48 +1,56 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace YoutubeDownloader {
     internal class YoutubeMedia {
 
         [JsonProperty(PropertyName = "id")]
-        public string ID { get; set; }
+        public string ID { get; set; } = string.Empty;
 
         [JsonProperty(PropertyName = "formats")]
-        public List<Format> Formats { get; set; }
+        private List<Format>? Formats_ { get; set; }
 
         [JsonProperty(PropertyName = "title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [JsonProperty(PropertyName = "webpage_url")]
-        public string URL { get; set; }
-
-        [JsonProperty(PropertyName = "ext")]
-        public string Ext { get; set; }
+        public string URL { get; set; } = string.Empty;
 
         [JsonProperty(PropertyName = "channel")]
-        public string ChannelName { get; set; }
+        public string ChannelName { get; set; } = string.Empty;
 
         [JsonProperty(PropertyName = "requested_formats")]
-        public List<Format> BestFormats { get; set; }
+        private List<Format>? BestFormats_ { get; set; }
 
         [JsonProperty(PropertyName = "duration_string")]
-        public string Duration { get; set; }
+        public string Duration { get; set; } = string.Empty;
 
-        public static YoutubeMedia FetchMediaInfo(string url) {
+        public static YoutubeMedia? FetchMediaInfo(string url) {
             string jsonString = Utils.RunCommand($"yt-dlp.exe --dump-json {url}");
             if (string.IsNullOrEmpty(jsonString)) {
-                throw new Exception();
+                return null;
             } else {
                 return JsonConvert.DeserializeObject<YoutubeMedia>(jsonString);
             }
         }
 
-        public List<Format> GetFormats() {
-            return Format.DeleteSimilarFormats(Formats);
+        public List<Format> Formats {
+            get {
+                if (Formats_ != null) {
+                    return Format.DeleteSimilarFormats(Formats_);
+                }
+
+                return new List<Format>();
+            }
+        }
+
+        public List<Format> BestFormats {
+            get {
+                if (BestFormats_ != null) {
+                    return BestFormats_;
+                }
+
+                return new List<Format>();
+            }
         }
     }
 }

@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
 namespace YoutubeDownloader {
     internal sealed class Utils {
         public const string COMMAND_FINISH = "the command is finish";
 
-        public static Process Process { get; set; }
+        public static Process? Process { get; set; }
 
         public static bool ExistsOnPath(string fileName) {
             return GetFullPath(fileName) != null;
         }
 
-        private static string GetFullPath(string fileName) {
+        private static string? GetFullPath(string fileName) {
             if (File.Exists(fileName)) {
                 return Path.GetFullPath(fileName);
             }
 
-            string values = Environment.GetEnvironmentVariable("PATH");
-            foreach (string path in values.Split(Path.PathSeparator)) {
-                string fullPath = Path.Combine(path, fileName);
-                if (File.Exists(fullPath)) {
-                    return fullPath;
+            string? values = Environment.GetEnvironmentVariable("PATH");
+            if (values != null) {
+                foreach (string path in values.Split(Path.PathSeparator)) {
+                    string fullPath = Path.Combine(path, fileName);
+                    if (File.Exists(fullPath)) {
+                        return fullPath;
+                    }
                 }
             }
+
 
             return null;
         }
@@ -61,7 +59,7 @@ namespace YoutubeDownloader {
         public delegate void EventOutputCommand(string output);
 
         public static string RunCommand(string command) {
-            ProcessStartInfo startInfo = new ProcessStartInfo {
+            ProcessStartInfo startInfo = new() {
                 FileName = "cmd.exe",
                 CreateNoWindow = true,
                 Arguments = $"/c {command}",
@@ -82,7 +80,7 @@ namespace YoutubeDownloader {
         public static string RunCommand(string command, EventOutputCommand eventOutput) {
             string output = string.Empty;
 
-            ProcessStartInfo startInfo = new ProcessStartInfo {
+            ProcessStartInfo startInfo = new() {
                 FileName = "cmd.exe",
                 CreateNoWindow = true,
                 Arguments = $"/c {command} && echo {COMMAND_FINISH}",

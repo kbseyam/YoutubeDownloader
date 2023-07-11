@@ -1,30 +1,25 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace YoutubeDownloader {
     internal sealed class Format {
 
         [JsonProperty(PropertyName = "format_id")]
-        public string FormatID { get; set; }
+        public string? FormatID { get; set; }
 
         [JsonProperty(PropertyName = "ext")]
-        public string Ext { get; set; }
+        public string? Ext { get; set; }
 
         [JsonProperty(PropertyName = "acodec")]
-        public string Acodec { get; set; }
+        public string? Acodec { get; set; }
 
         [JsonProperty(PropertyName = "vcodec")]
-        public string Vcodec { get; set; }
+        public string? Vcodec { get; set; }
 
         [JsonProperty(PropertyName = "resolution")]
-        public string Resolution { get; set; }
+        public string? Resolution { get; set; }
 
         [JsonProperty(PropertyName = "dynamic_range")]
-        public string DynamicRange { get; set; }
+        public string? DynamicRange { get; set; }
 
         [JsonProperty(PropertyName = "fps")]
         public float? Fps { get; set; }
@@ -41,7 +36,6 @@ namespace YoutubeDownloader {
                 }
                 return Type.UNKNOWN;
             }
-            private set { FormatType = value; }
         }
 
         public enum Type {

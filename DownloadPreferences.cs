@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Windows.Forms.DataFormats;
-
-namespace YoutubeDownloader {
+﻿namespace YoutubeDownloader {
     internal class DownloadPreferences {
 
-        public DownloadPreferences(YoutubeMedia media, Format videoFormat, Format audioFormat) {
+        public DownloadPreferences(YoutubeMedia media, Format? videoFormat, Format? audioFormat) {
             this.videoFormat = videoFormat;
             this.audioFormat = audioFormat;
             this.media = media;
         }
 
         public YoutubeMedia media;
-        public Format videoFormat;
-        public Format audioFormat;
-        public string path;
+        public Format? videoFormat;
+        public Format? audioFormat;
+        public string? path;
 
-        public string FileExt {
+        public string? FileExt {
             get {
                 if (videoFormat != null) {
                     return videoFormat.Ext;
                 }
+                if (audioFormat != null) {
+                    return audioFormat.Ext;
+                }
 
-                return audioFormat.Ext;
+                return null;
             }
         }
 

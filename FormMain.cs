@@ -1,4 +1,3 @@
-using static System.Windows.Forms.DataFormats;
 using System.Diagnostics;
 
 namespace YoutubeDownloader {
@@ -8,8 +7,8 @@ namespace YoutubeDownloader {
         private delegate void SafeCallDelgate_INT(int value);
         private delegate void SafeCallDelgate_STRING(Control control, string text);
 
-        private YoutubeMedia media;
-        private DownloadPreferences downloadPreferences;
+        private YoutubeMedia? media;
+        private DownloadPreferences? downloadPreferences;
 
         public FormMain() {
             InitializeComponent();
@@ -60,29 +59,23 @@ namespace YoutubeDownloader {
         }
 
         private bool FetchInfo() {
-            try {
-                if (!Utils.IsYoutubeVideoUrl(TbURL.Text)) {
-                    throw new Exception();
-                }
-                media = YoutubeMedia.FetchMediaInfo(TbURL.Text);
-                RefreshControls(true);
-
-                return true;
-            } catch {
-                media = null;
-                RefreshControls(false);
-                return false;
+            if (!Utils.IsYoutubeVideoUrl(TbURL.Text)) {
+                throw new Exception();
             }
+            media = YoutubeMedia.FetchMediaInfo(TbURL.Text);
+            RefreshControls();
+
+            return media != null;
         }
 
-        private void RefreshControls(bool hasMedia) {
-            RbVideoAudio.Enabled = hasMedia;
-            RbVideo.Enabled = hasMedia;
-            RbAudio.Enabled = hasMedia;
-            RbCustom.Enabled = hasMedia;
-            BtnDownload.Enabled = hasMedia;
+        private void RefreshControls() {
+            RbVideoAudio.Enabled = media != null;
+            RbVideo.Enabled = media != null;
+            RbAudio.Enabled = media != null;
+            RbCustom.Enabled = media != null;
+            BtnDownload.Enabled = media != null;
 
-            if (hasMedia) {
+            if (media != null) {
                 LbVideoTitle.Text = $"{media.Title}     ({media.Duration})";
                 LbChannelName.Text = media.ChannelName;
             } else {
@@ -97,18 +90,18 @@ namespace YoutubeDownloader {
         private void RefreshCbVideo() {
             if (media != null) {
                 CbVideo.DisplayMember = Format.VIDEO_FORMAT_STRING;
-                CbVideo.DataSource = media.GetFormats().Where((item) => item.FormatType == Format.Type.VIDEO).ToList();
+                CbVideo.DataSource = media.Formats.Where((item) => item.FormatType == Format.Type.VIDEO).ToList();
                 CbVideo.SelectedIndex = 0;
-            } else { CbVideo.DataSource = null; CbVideo.DisplayMember = null; }
+            } else { CbVideo.DataSource = null; CbVideo.DisplayMember = string.Empty; }
 
         }
 
         private void RefreshCbAudio() {
             if (media != null) {
-                CbAudio.DataSource = media.GetFormats().Where((item) => item.FormatType == Format.Type.AUDIO).ToList();
+                CbAudio.DataSource = media.Formats.Where((item) => item.FormatType == Format.Type.AUDIO).ToList();
                 CbAudio.DisplayMember = Format.AUDIO_FORMAT_STRING;
                 CbAudio.SelectedIndex = 0;
-            } else { CbAudio.DataSource = null; CbAudio.DisplayMember = null; }
+            } else { CbAudio.DataSource = null; CbAudio.DisplayMember = string.Empty; }
 
         }
 
@@ -120,7 +113,7 @@ namespace YoutubeDownloader {
             CbAudio.Enabled = ChkAudio.Checked;
         }
 
-        private void ResetDownloadSControls() {
+        private void ResetDownloadControls() {
             SetTextSafe(LbStatus, string.Empty);
             SetTextSafe(LbPercentage, string.Empty);
             SetProgressBarValue(0);
@@ -128,7 +121,12 @@ namespace YoutubeDownloader {
         }
 
         private void BtnDownload_Click(object sender, EventArgs e) {
-            ResetDownloadSControls();
+            ResetDownloadControls();
+
+            if (media == null) {
+                MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             downloadPreferences = new DownloadPreferences(media, GetSelectedVideoFormat(), GetSelectedAudioFormat());
             SaveFileDialog1.Filter = $"{downloadPreferences.FileExt}|*.{downloadPreferences.FileExt}";
@@ -138,7 +136,7 @@ namespace YoutubeDownloader {
                 downloadPreferences.path = SaveFileDialog1.FileName;
                 SetTextSafe(LbStatus, "Starting download");
 
-                Thread thread = new Thread(new ThreadStart(Download));
+                Thread thread = new(new ThreadStart(Download));
                 thread.Start();
             }
 
@@ -160,7 +158,7 @@ namespace YoutubeDownloader {
                 return;
             }
 
-            if (downloadPreferences.videoFormat != null) {
+            if (downloadPreferences?.videoFormat != null) {
                 if (downloadPreferences.audioFormat == null) {
                     SetTextSafe(LbStatus, "Downloading video");
                     return;
@@ -169,7 +167,7 @@ namespace YoutubeDownloader {
                     return;
                 }
             }
-            if (downloadPreferences.audioFormat != null) {
+            if (downloadPreferences?.audioFormat != null) {
                 if (downloadPreferences.videoFormat == null) {
                     SetTextSafe(LbStatus, "Downloading audio");
                     return;
@@ -190,13 +188,15 @@ namespace YoutubeDownloader {
             if (output.StartsWith("[download]")) {
                 int indexOfPercentage = output.IndexOf('%');
                 if (indexOfPercentage == -1) { return; }
-                float.TryParse(output.Substring(11, indexOfPercentage - 11), out float percentage);
-                if (percentage > 100) {
-                    percentage = 100;
-                }
-                SetProgressBarValue((int)percentage);
-                SetTextSafe(LbPercentage, ((int)percentage).ToString() + '%');
+                bool hasPercentage = float.TryParse(output.AsSpan(11, indexOfPercentage - 11), out float percentage);
 
+                if (hasPercentage) {
+                    if (percentage > 100) {
+                        percentage = 100;
+                    }
+                    SetProgressBarValue((int)percentage);
+                    SetTextSafe(LbPercentage, ((int)percentage).ToString() + '%');
+                }
             }
 
         }
@@ -205,7 +205,7 @@ namespace YoutubeDownloader {
             if (ProgressBarDownload.InvokeRequired) {
                 if (!stopInvoking) {
                     invokeInProgress = true;
-                    SafeCallDelgate_INT d = new SafeCallDelgate_INT(SetProgressBarValue);
+                    SafeCallDelgate_INT d = new(SetProgressBarValue);
                     ProgressBarDownload.Invoke(d, new object[] { value });
                     invokeInProgress = false;
                 }
@@ -219,7 +219,7 @@ namespace YoutubeDownloader {
             if (control.InvokeRequired) {
                 if (!stopInvoking) {
                     invokeInProgress = true;
-                    SafeCallDelgate_STRING d = new SafeCallDelgate_STRING(SetTextSafe);
+                    SafeCallDelgate_STRING d = new(SetTextSafe);
                     control.Invoke(d, new object[] { control, text });
                     invokeInProgress = false;
                 }
@@ -229,22 +229,28 @@ namespace YoutubeDownloader {
             }
         }
 
-        private Format GetSelectedVideoFormat() {
+        private Format? GetSelectedVideoFormat() {
+            if (media == null) {
+                return null;
+            }
             if (RbCustom.Checked && ChkVideo.Checked) {
                 return CbVideo.SelectedItem as Format;
             }
-            if (RbVideo.Checked || RbVideoAudio.Checked) {
+            if ((RbVideo.Checked || RbVideoAudio.Checked)) {
                 return media.BestFormats[0];
             }
 
             return null;
         }
 
-        private Format GetSelectedAudioFormat() {
+        private Format? GetSelectedAudioFormat() {
+            if (media == null) {
+                return null;
+            }
             if (RbCustom.Checked && ChkAudio.Checked) {
                 return CbAudio.SelectedItem as Format;
             }
-            if (RbAudio.Checked || RbVideoAudio.Checked) {
+            if ((RbAudio.Checked || RbVideoAudio.Checked)) {
                 return media.BestFormats[1];
             }
 
@@ -261,14 +267,20 @@ namespace YoutubeDownloader {
         private async void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
             if (Utils.Process != null) {
                 if (!Utils.Process.HasExited) {
-                    List<Process> childProcesses = Utils.Process.GetChildProcesses().Find(p => p.ProcessName == "yt-dlp").GetChildProcesses();
+                    Process? ytdlpProcess = Utils.Process.GetChildProcesses().Find(p => p.ProcessName == "yt-dlp");
+                    if (ytdlpProcess != null) {
+                        List<Process> childProcesses = ytdlpProcess.GetChildProcesses();
 
-                    foreach (Process childProcess in childProcesses) {
-                        childProcess.Kill();
-                        childProcess.WaitForExit();
-                        childProcess.Dispose();
+                        foreach (Process childProcess in childProcesses) {
+                            childProcess.Kill();
+                            childProcess.WaitForExit();
+                            childProcess.Dispose();
+                        }
+                        if (media != null) {
+                            Utils.RemoveFilesStartsWith(media.ID);
+                        }
                     }
-                    Utils.RemoveFilesStartsWith(media.ID);
+
                 }
             }
 
