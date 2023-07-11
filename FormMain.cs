@@ -83,7 +83,7 @@ namespace YoutubeDownloader {
             BtnDownload.Enabled = hasMedia;
 
             if (hasMedia) {
-                LbVideoTitle.Text = media.Title;
+                LbVideoTitle.Text = $"{media.Title}     ({media.Duration})";
                 LbChannelName.Text = media.ChannelName;
             } else {
                 LbVideoTitle.Text = string.Empty;

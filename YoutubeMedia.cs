@@ -29,6 +29,9 @@ namespace YoutubeDownloader {
         [JsonProperty(PropertyName = "requested_formats")]
         public List<Format> BestFormats { get; set; }
 
+        [JsonProperty(PropertyName = "duration_string")]
+        public string Duration { get; set; }
+
         public static YoutubeMedia FetchMediaInfo(string url) {
             string jsonString = Utils.RunCommand($"yt-dlp.exe --dump-json {url}");
             if (string.IsNullOrEmpty(jsonString)) {
