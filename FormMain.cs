@@ -1,10 +1,13 @@
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
+using System.Windows.Forms;
 
 namespace YoutubeDownloader {
     public partial class FormMain : Form {
         private bool invokeInProgress = false;
         private bool stopInvoking = false;
         private delegate void SafeCallDelgate_INT(int value);
+        private delegate void SafeCallDelgate_INT_2(ComboBox comboBox, int value);
         private delegate void SafeCallDelgate_STRING(Control control, string text);
 
         private YoutubeMedia? media;
@@ -44,6 +47,8 @@ namespace YoutubeDownloader {
             lbFetchingInfo.Visible = true;
 
             if (await Task.Run(() => FetchInfo())) {
+                ResetDownloadControls();
+                ResetPreferencesControls();
                 VisibleControlsForFetch(true);
             } else {
                 VisibleControlsForFetch(false);
@@ -76,11 +81,11 @@ namespace YoutubeDownloader {
             BtnDownload.Enabled = media != null;
 
             if (media != null) {
-                LbVideoTitle.Text = $"{media.Title}     ({media.Duration})";
-                LbChannelName.Text = media.ChannelName;
+                SetTextSafe(LbVideoTitle, $"{media.Title}     ({media.Duration})");
+                SetTextSafe(LbChannelName, media.ChannelName);
             } else {
-                LbVideoTitle.Text = string.Empty;
-                LbChannelName.Text = string.Empty;
+                SetTextSafe(LbVideoTitle, string.Empty);
+                SetTextSafe(LbChannelName, string.Empty);
             }
 
             RefreshCbVideo();
@@ -91,7 +96,7 @@ namespace YoutubeDownloader {
             if (media != null) {
                 CbVideo.DisplayMember = Format.VIDEO_FORMAT_STRING;
                 CbVideo.DataSource = media.Formats.Where((item) => item.FormatType == Format.Type.VIDEO).ToList();
-                CbVideo.SelectedIndex = 0;
+                SetSlecetedIndexSafe(CbVideo, 0);
             } else { CbVideo.DataSource = null; CbVideo.DisplayMember = string.Empty; }
 
         }
@@ -100,7 +105,7 @@ namespace YoutubeDownloader {
             if (media != null) {
                 CbAudio.DataSource = media.Formats.Where((item) => item.FormatType == Format.Type.AUDIO).ToList();
                 CbAudio.DisplayMember = Format.AUDIO_FORMAT_STRING;
-                CbAudio.SelectedIndex = 0;
+                SetSlecetedIndexSafe(CbAudio, 0);
             } else { CbAudio.DataSource = null; CbAudio.DisplayMember = string.Empty; }
 
         }
@@ -111,6 +116,14 @@ namespace YoutubeDownloader {
 
         private void ChkAudio_CheckedChanged(object sender, EventArgs e) {
             CbAudio.Enabled = ChkAudio.Checked;
+        }
+
+        private void ResetPreferencesControls() {
+            RbVideoAudio.Checked = true;
+            SetSlecetedIndexSafe(CbVideo, 0);
+            SetSlecetedIndexSafe(CbAudio, 0);
+            ChkAudio.Checked = false;
+            ChkVideo.Checked = false;
         }
 
         private void ResetDownloadControls() {
@@ -201,6 +214,20 @@ namespace YoutubeDownloader {
 
         }
 
+        private void SetSlecetedIndexSafe(ComboBox comboBox, int index) {
+            if (comboBox.InvokeRequired) {
+                if (!stopInvoking) {
+                    invokeInProgress = true;
+                    SafeCallDelgate_INT_2 d = new(SetSlecetedIndexSafe);
+                    comboBox.Invoke(d, new object[] { comboBox, index });
+                    invokeInProgress = false;
+                }
+
+            } else {
+                comboBox.SelectedIndex = index;
+            }
+        }
+
         private void SetProgressBarValue(int value) {
             if (ProgressBarDownload.InvokeRequired) {
                 if (!stopInvoking) {
@@ -277,7 +304,7 @@ namespace YoutubeDownloader {
                             childProcess.Dispose();
                         }
                         if (media != null) {
-                            Utils.RemoveFilesStartsWith(media.ID);
+                            Utils.RemoveFilesStartsWith(media.Guid);
                         }
                     }
 

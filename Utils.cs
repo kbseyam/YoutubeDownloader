@@ -124,21 +124,8 @@ namespace YoutubeDownloader {
             return command.IndexOfAny(new char[] { '&', '|', '<', '>' }) == -1;
         }
 
-        public static List<FileInfo> GetFilesStartWith(string startWith) {
-            List<FileInfo> files = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles().ToList();
-
-            for (int i = 0; i < files.Count; i++) {
-                if (!files[i].Name.StartsWith(startWith)) {
-                    files.RemoveAt(i);
-                    i--;
-                }
-            }
-
-            return files;
-        }
-
         public static void RemoveFilesStartsWith(string startWith) {
-            List<FileInfo> files = GetFilesStartWith(startWith);
+            FileInfo[] files = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles($"{startWith}*"); ;
             foreach (FileInfo file in files) {
                 File.Delete(file.FullName);
             }

@@ -3,6 +3,14 @@
 namespace YoutubeDownloader {
     internal class YoutubeMedia {
 
+        private readonly Guid guid_ = System.Guid.NewGuid();
+
+        public string Guid {
+            get {
+                return guid_.ToString();
+            }
+        }
+
         [JsonProperty(PropertyName = "id")]
         public string ID { get; set; } = string.Empty;
 
