@@ -24,7 +24,7 @@
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            Label1 = new Label();
+            LbTagURL = new Label();
             TbURL = new TextBox();
             BtnFetch = new Button();
             CbVideo = new ComboBox();
@@ -33,32 +33,32 @@
             ChkVideo = new CheckBox();
             ChkAudio = new CheckBox();
             ProgressBarDownload = new ProgressBar();
-            LbStatus = new Label();
+            LbDownloadStatus = new Label();
             SaveFileDialog1 = new SaveFileDialog();
             LbPercentage = new Label();
             LbVideoTitle = new Label();
-            Label2 = new Label();
-            Label3 = new Label();
+            LbTagTitle = new Label();
+            LbTagChannelName = new Label();
             LbChannelName = new Label();
             RbVideoAudio = new RadioButton();
             RbVideo = new RadioButton();
             RbAudio = new RadioButton();
             RbCustom = new RadioButton();
-            pictureBox1 = new PictureBox();
+            PBFetchRuning = new PictureBox();
             lbFetchingInfo = new Label();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PBFetchRuning).BeginInit();
             SuspendLayout();
             // 
-            // Label1
+            // LbTagURL
             // 
-            Label1.AutoSize = true;
-            Label1.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            Label1.Location = new Point(9, 13);
-            Label1.Margin = new Padding(4, 0, 4, 0);
-            Label1.Name = "Label1";
-            Label1.Size = new Size(46, 20);
-            Label1.TabIndex = 0;
-            Label1.Text = "URL:";
+            LbTagURL.AutoSize = true;
+            LbTagURL.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            LbTagURL.Location = new Point(9, 13);
+            LbTagURL.Margin = new Padding(4, 0, 4, 0);
+            LbTagURL.Name = "LbTagURL";
+            LbTagURL.Size = new Size(46, 20);
+            LbTagURL.TabIndex = 0;
+            LbTagURL.Text = "URL:";
             // 
             // TbURL
             // 
@@ -166,15 +166,15 @@
             ProgressBarDownload.TabIndex = 10;
             ProgressBarDownload.Visible = false;
             // 
-            // LbStatus
+            // LbDownloadStatus
             // 
-            LbStatus.AutoSize = true;
-            LbStatus.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LbStatus.Location = new Point(13, 336);
-            LbStatus.Margin = new Padding(4, 0, 4, 0);
-            LbStatus.Name = "LbStatus";
-            LbStatus.Size = new Size(0, 18);
-            LbStatus.TabIndex = 11;
+            LbDownloadStatus.AutoSize = true;
+            LbDownloadStatus.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            LbDownloadStatus.Location = new Point(13, 336);
+            LbDownloadStatus.Margin = new Padding(4, 0, 4, 0);
+            LbDownloadStatus.Name = "LbDownloadStatus";
+            LbDownloadStatus.Size = new Size(0, 18);
+            LbDownloadStatus.TabIndex = 11;
             // 
             // SaveFileDialog1
             // 
@@ -201,29 +201,29 @@
             LbVideoTitle.TabIndex = 13;
             LbVideoTitle.Visible = false;
             // 
-            // Label2
+            // LbTagTitle
             // 
-            Label2.AutoSize = true;
-            Label2.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Label2.Location = new Point(9, 76);
-            Label2.Margin = new Padding(4, 0, 4, 0);
-            Label2.Name = "Label2";
-            Label2.Size = new Size(36, 16);
-            Label2.TabIndex = 14;
-            Label2.Text = "Title:";
-            Label2.Visible = false;
+            LbTagTitle.AutoSize = true;
+            LbTagTitle.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            LbTagTitle.Location = new Point(9, 76);
+            LbTagTitle.Margin = new Padding(4, 0, 4, 0);
+            LbTagTitle.Name = "LbTagTitle";
+            LbTagTitle.Size = new Size(36, 16);
+            LbTagTitle.TabIndex = 14;
+            LbTagTitle.Text = "Title:";
+            LbTagTitle.Visible = false;
             // 
-            // Label3
+            // LbTagChannelName
             // 
-            Label3.AutoSize = true;
-            Label3.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            Label3.Location = new Point(9, 54);
-            Label3.Margin = new Padding(4, 0, 4, 0);
-            Label3.Name = "Label3";
-            Label3.Size = new Size(59, 16);
-            Label3.TabIndex = 15;
-            Label3.Text = "Channel:";
-            Label3.Visible = false;
+            LbTagChannelName.AutoSize = true;
+            LbTagChannelName.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            LbTagChannelName.Location = new Point(9, 54);
+            LbTagChannelName.Margin = new Padding(4, 0, 4, 0);
+            LbTagChannelName.Name = "LbTagChannelName";
+            LbTagChannelName.Size = new Size(59, 16);
+            LbTagChannelName.TabIndex = 15;
+            LbTagChannelName.Text = "Channel:";
+            LbTagChannelName.Visible = false;
             // 
             // LbChannelName
             // 
@@ -295,20 +295,20 @@
             RbCustom.Visible = false;
             RbCustom.CheckedChanged += RbCustom_CheckedChanged;
             // 
-            // pictureBox1
+            // PBFetchRuning
             // 
-            pictureBox1.BackColor = Color.Transparent;
-            pictureBox1.BackgroundImageLayout = ImageLayout.None;
-            pictureBox1.Enabled = false;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(304, 161);
-            pictureBox1.Margin = new Padding(4, 3, 4, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(132, 132);
-            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.TabIndex = 21;
-            pictureBox1.TabStop = false;
-            pictureBox1.Visible = false;
+            PBFetchRuning.BackColor = Color.Transparent;
+            PBFetchRuning.BackgroundImageLayout = ImageLayout.None;
+            PBFetchRuning.Enabled = false;
+            PBFetchRuning.Image = (Image)resources.GetObject("PBFetchRuning.Image");
+            PBFetchRuning.Location = new Point(304, 161);
+            PBFetchRuning.Margin = new Padding(4, 3, 4, 3);
+            PBFetchRuning.Name = "PBFetchRuning";
+            PBFetchRuning.Size = new Size(132, 132);
+            PBFetchRuning.SizeMode = PictureBoxSizeMode.CenterImage;
+            PBFetchRuning.TabIndex = 21;
+            PBFetchRuning.TabStop = false;
+            PBFetchRuning.Visible = false;
             // 
             // lbFetchingInfo
             // 
@@ -328,17 +328,17 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(741, 455);
             Controls.Add(lbFetchingInfo);
-            Controls.Add(pictureBox1);
+            Controls.Add(PBFetchRuning);
             Controls.Add(RbCustom);
             Controls.Add(RbAudio);
             Controls.Add(RbVideo);
             Controls.Add(RbVideoAudio);
             Controls.Add(LbChannelName);
-            Controls.Add(Label3);
-            Controls.Add(Label2);
+            Controls.Add(LbTagChannelName);
+            Controls.Add(LbTagTitle);
             Controls.Add(LbVideoTitle);
             Controls.Add(LbPercentage);
-            Controls.Add(LbStatus);
+            Controls.Add(LbDownloadStatus);
             Controls.Add(ProgressBarDownload);
             Controls.Add(ChkAudio);
             Controls.Add(ChkVideo);
@@ -347,7 +347,7 @@
             Controls.Add(CbVideo);
             Controls.Add(BtnFetch);
             Controls.Add(TbURL);
-            Controls.Add(Label1);
+            Controls.Add(LbTagURL);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4, 3, 4, 3);
@@ -357,14 +357,14 @@
             Text = "Youtube downloader";
             FormClosing += FormMain_FormClosing;
             Shown += FormMain_Shown;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PBFetchRuning).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label Label1;
+        private Label LbTagURL;
         private TextBox TbURL;
         private Button BtnFetch;
         private ComboBox CbVideo;
@@ -373,18 +373,18 @@
         private CheckBox ChkVideo;
         private CheckBox ChkAudio;
         private ProgressBar ProgressBarDownload;
-        private Label LbStatus;
+        private Label LbDownloadStatus;
         private SaveFileDialog SaveFileDialog1;
         private Label LbPercentage;
         private Label LbVideoTitle;
-        private Label Label2;
-        private Label Label3;
+        private Label LbTagTitle;
+        private Label LbTagChannelName;
         private Label LbChannelName;
         private RadioButton RbVideoAudio;
         private RadioButton RbVideo;
         private RadioButton RbAudio;
         private RadioButton RbCustom;
-        private PictureBox pictureBox1;
+        private PictureBox PBFetchRuning;
         private Label lbFetchingInfo;
     }
 }

@@ -1,31 +1,37 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace YoutubeDownloader {
     internal sealed class Format {
 
-        [JsonProperty(PropertyName = "format_id")]
-        public string? FormatID { get; set; }
+        public enum Type {
+            VIDEO, AUDIO, UNKNOWN
+        }
+
+        [DefaultValue("")]
+        [JsonProperty(PropertyName = "format_id", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public string FormatID { get; private set; }
 
         [JsonProperty(PropertyName = "ext")]
-        public string? Ext { get; set; }
+        public string? Ext { get; private set; }
 
         [JsonProperty(PropertyName = "acodec")]
-        public string? Acodec { get; set; }
+        public string? Acodec { get; private set; }
 
         [JsonProperty(PropertyName = "vcodec")]
-        public string? Vcodec { get; set; }
+        public string? Vcodec { get; private set; }
 
         [JsonProperty(PropertyName = "resolution")]
-        public string? Resolution { get; set; }
+        public string? Resolution { get; private set; }
 
         [JsonProperty(PropertyName = "dynamic_range")]
-        public string? DynamicRange { get; set; }
+        public string? DynamicRange { get; private set; }
 
         [JsonProperty(PropertyName = "fps")]
-        public float? Fps { get; set; }
+        public float? Fps { get; private set; }
 
         [JsonProperty(PropertyName = "asr")]
-        public int? Asr { get; set; }
+        public int? Asr { get; private set; }
 
         public Type FormatType {
             get {
@@ -38,8 +44,16 @@ namespace YoutubeDownloader {
             }
         }
 
-        public enum Type {
-            VIDEO, AUDIO, UNKNOWN
+        [JsonConstructor]
+        public Format(string formatID, string? ext, string? acodec, string? vcodec, string? resolution, string? dynamicRange, float? fps, int? asr) {
+            FormatID = formatID;
+            Ext = ext;
+            Acodec = acodec;
+            Vcodec = vcodec;
+            Resolution = resolution;
+            DynamicRange = dynamicRange;
+            Fps = fps;
+            Asr = asr;
         }
 
         public const string VIDEO_FORMAT_STRING = "VideoFormatString";

@@ -1,63 +1,91 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace YoutubeDownloader {
     internal class YoutubeMedia {
 
-        private readonly Guid guid_ = System.Guid.NewGuid();
-
         public string Guid {
-            get {
-                return guid_.ToString();
-            }
+            get; private set;
         }
 
-        [JsonProperty(PropertyName = "id")]
-        public string ID { get; set; } = string.Empty;
+        [DefaultValue(0)]
+        [JsonProperty(PropertyName = "id", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public string ID { get; private set; }
+
+        [DefaultValue("")]
+        [JsonProperty(PropertyName = "webpage_url", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public string URL { get; private set; }
+
+        [DefaultValue("")]
+        [JsonProperty(PropertyName = "channel", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public string ChannelName { get; private set; }
+
+        [DefaultValue("")]
+        [JsonProperty(PropertyName = "title", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public string Title { get; private set; }
+
+        [DefaultValue("")]
+        [JsonProperty(PropertyName = "duration_string", DefaultValueHandling = DefaultValueHandling.Populate)]
+        public string DurationString { get; private set; }
 
         [JsonProperty(PropertyName = "formats")]
-        private List<Format>? Formats_ { get; set; }
-
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; set; } = string.Empty;
-
-        [JsonProperty(PropertyName = "webpage_url")]
-        public string URL { get; set; } = string.Empty;
-
-        [JsonProperty(PropertyName = "channel")]
-        public string ChannelName { get; set; } = string.Empty;
+        public List<Format> Formats { get; private set; }
 
         [JsonProperty(PropertyName = "requested_formats")]
-        private List<Format>? BestFormats_ { get; set; }
+        public List<Format> BestFormats { get; private set; }
 
-        [JsonProperty(PropertyName = "duration_string")]
-        public string Duration { get; set; } = string.Empty;
+        [JsonConstructor]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+        private YoutubeMedia(string id, List<Format> formats, string title, string url, string channelName,
+            List<Format> bestFormats, string durationString) {
+            Guid = System.Guid.NewGuid().ToString();
+            ID = id;
+            URL = url;
+            ChannelName = channelName;
+            Title = title;
+            DurationString = durationString;
+
+            if (formats != null) {
+                Formats = Format.DeleteSimilarFormats(formats);
+            } else {
+                Formats = new List<Format>();
+            }
+
+            if (bestFormats != null) {
+                BestFormats = bestFormats;
+            } else {
+                BestFormats = new List<Format>();
+            }
+        }
 
         public static YoutubeMedia? FetchMediaInfo(string url) {
-            string jsonString = Utils.RunCommand($"yt-dlp.exe --dump-json {url}");
-            if (string.IsNullOrEmpty(jsonString)) {
-                return null;
-            } else {
+            if (Utils.IsYoutubeVideoUrl(url)) {
+                string jsonString = Utils.RunCommand($"yt-dlp.exe --dump-json {url}");
+
                 return JsonConvert.DeserializeObject<YoutubeMedia>(jsonString);
             }
+
+            return null;
         }
 
-        public List<Format> Formats {
-            get {
-                if (Formats_ != null) {
-                    return Format.DeleteSimilarFormats(Formats_);
+        public void Download(DownloadPreferences downloadPreferences, Utils.EventOutputCommand eventOutput) {
+            Utils.RunCommand($"yt-dlp.exe -f {downloadPreferences.FormatString} -o" +
+                $" {Guid}.%(ext)s {URL}", eventOutput);
+
+            FileInfo[] filesInfoStartWithVideoGuid = new DirectoryInfo(Directory.GetCurrentDirectory()).GetFiles($"{Guid}*");
+
+            if (filesInfoStartWithVideoGuid.Length != 0) {
+                if (downloadPreferences.path != null) {
+                    if (File.Exists(downloadPreferences.path)) {
+                        File.Delete(downloadPreferences.path);
+                    }
+
+                    string tempFilePath = filesInfoStartWithVideoGuid[0].FullName;
+
+                    if (File.Exists(tempFilePath)) {
+                        File.Move(tempFilePath, downloadPreferences.path);
+                    }
                 }
-
-                return new List<Format>();
-            }
-        }
-
-        public List<Format> BestFormats {
-            get {
-                if (BestFormats_ != null) {
-                    return BestFormats_;
-                }
-
-                return new List<Format>();
             }
         }
     }

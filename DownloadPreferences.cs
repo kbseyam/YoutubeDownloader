@@ -1,13 +1,11 @@
 ﻿namespace YoutubeDownloader {
     internal class DownloadPreferences {
 
-        public DownloadPreferences(YoutubeMedia media, Format? videoFormat, Format? audioFormat) {
+        public DownloadPreferences(Format? videoFormat, Format? audioFormat) {
             this.videoFormat = videoFormat;
             this.audioFormat = audioFormat;
-            this.media = media;
         }
 
-        public YoutubeMedia media;
         public Format? videoFormat;
         public Format? audioFormat;
         public string? path;

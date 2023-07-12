@@ -2,11 +2,14 @@
 
 namespace YoutubeDownloader {
     internal sealed class Utils {
-        public const string COMMAND_FINISH = "the command is finish";
+
+        public delegate void EventOutputCommand(string output);
+
+        public const string COMMAND_FINISH = "the command is finish (YoutubeDownloader_kbseyam)";
 
         public static Process? Process { get; set; }
 
-        public static bool ExistsOnPath(string fileName) {
+        public static bool IsExistsOnComputer(string fileName) {
             return GetFullPath(fileName) != null;
         }
 
@@ -25,7 +28,6 @@ namespace YoutubeDownloader {
                 }
             }
 
-
             return null;
         }
 
@@ -36,27 +38,25 @@ namespace YoutubeDownloader {
         }
 
         private static void Check_ytdlp() {
-            if (!ExistsOnPath("yt-dlp.exe")) {
+            if (!IsExistsOnComputer("yt-dlp.exe")) {
                 MessageBox.Show("yt-dlp.exe not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
 
         private static void Check_ffmpeg() {
-            if (!ExistsOnPath("ffmpeg.exe")) {
+            if (!IsExistsOnComputer("ffmpeg.exe")) {
                 MessageBox.Show("ffmpeg not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
 
         private static void Check_ffprobe() {
-            if (!ExistsOnPath("ffprobe.exe")) {
+            if (!IsExistsOnComputer("ffprobe.exe")) {
                 MessageBox.Show("ffprobe not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
-
-        public delegate void EventOutputCommand(string output);
 
         public static string RunCommand(string command) {
             ProcessStartInfo startInfo = new() {
@@ -111,6 +111,10 @@ namespace YoutubeDownloader {
         }
 
         public static string GetValidFileName(string fileName) {
+            if (string.IsNullOrEmpty(fileName)) {
+                return "filename";
+            }
+
             fileName = fileName.Replace('?', '？');
             char[] chars = Path.GetInvalidFileNameChars();
             foreach (char c in chars) {
