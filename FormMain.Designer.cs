@@ -46,14 +46,16 @@
             RbCustom = new RadioButton();
             PBFetchRuning = new PictureBox();
             lbFetchingInfo = new Label();
+            PBSettings = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)PBFetchRuning).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PBSettings).BeginInit();
             SuspendLayout();
             // 
             // LbTagURL
             // 
             LbTagURL.AutoSize = true;
             LbTagURL.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            LbTagURL.Location = new Point(9, 13);
+            LbTagURL.Location = new Point(9, 15);
             LbTagURL.Margin = new Padding(4, 0, 4, 0);
             LbTagURL.Name = "LbTagURL";
             LbTagURL.Size = new Size(46, 20);
@@ -66,7 +68,7 @@
             TbURL.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             TbURL.AutoCompleteSource = AutoCompleteSource.CustomSource;
             TbURL.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            TbURL.Location = new Point(90, 10);
+            TbURL.Location = new Point(90, 12);
             TbURL.Margin = new Padding(4, 3, 4, 3);
             TbURL.MaxLength = 100;
             TbURL.Name = "TbURL";
@@ -77,7 +79,7 @@
             // BtnFetch
             // 
             BtnFetch.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnFetch.Location = new Point(617, 52);
+            BtnFetch.Location = new Point(617, 54);
             BtnFetch.Margin = new Padding(4, 3, 4, 3);
             BtnFetch.Name = "BtnFetch";
             BtnFetch.Size = new Size(111, 40);
@@ -92,7 +94,7 @@
             CbVideo.Enabled = false;
             CbVideo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             CbVideo.FormattingEnabled = true;
-            CbVideo.Location = new Point(90, 188);
+            CbVideo.Location = new Point(90, 190);
             CbVideo.Margin = new Padding(4, 3, 4, 3);
             CbVideo.Name = "CbVideo";
             CbVideo.Size = new Size(638, 28);
@@ -105,7 +107,7 @@
             CbAudio.Enabled = false;
             CbAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
             CbAudio.FormattingEnabled = true;
-            CbAudio.Location = new Point(90, 232);
+            CbAudio.Location = new Point(90, 234);
             CbAudio.Margin = new Padding(4, 3, 4, 3);
             CbAudio.Name = "CbAudio";
             CbAudio.Size = new Size(638, 28);
@@ -116,7 +118,7 @@
             // 
             BtnDownload.Enabled = false;
             BtnDownload.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnDownload.Location = new Point(617, 284);
+            BtnDownload.Location = new Point(617, 286);
             BtnDownload.Margin = new Padding(4, 3, 4, 3);
             BtnDownload.Name = "BtnDownload";
             BtnDownload.Size = new Size(111, 40);
@@ -131,7 +133,7 @@
             ChkVideo.AutoSize = true;
             ChkVideo.Enabled = false;
             ChkVideo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ChkVideo.Location = new Point(9, 190);
+            ChkVideo.Location = new Point(9, 192);
             ChkVideo.Margin = new Padding(4, 3, 4, 3);
             ChkVideo.Name = "ChkVideo";
             ChkVideo.Size = new Size(73, 24);
@@ -146,7 +148,7 @@
             ChkAudio.AutoSize = true;
             ChkAudio.Enabled = false;
             ChkAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            ChkAudio.Location = new Point(9, 234);
+            ChkAudio.Location = new Point(9, 236);
             ChkAudio.Margin = new Padding(4, 3, 4, 3);
             ChkAudio.Name = "ChkAudio";
             ChkAudio.Size = new Size(73, 24);
@@ -158,7 +160,7 @@
             // 
             // ProgressBarDownload
             // 
-            ProgressBarDownload.Location = new Point(11, 357);
+            ProgressBarDownload.Location = new Point(11, 359);
             ProgressBarDownload.Margin = new Padding(4, 3, 4, 3);
             ProgressBarDownload.Name = "ProgressBarDownload";
             ProgressBarDownload.Size = new Size(719, 27);
@@ -170,7 +172,7 @@
             // 
             LbDownloadStatus.AutoSize = true;
             LbDownloadStatus.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LbDownloadStatus.Location = new Point(13, 336);
+            LbDownloadStatus.Location = new Point(12, 294);
             LbDownloadStatus.Margin = new Padding(4, 0, 4, 0);
             LbDownloadStatus.Name = "LbDownloadStatus";
             LbDownloadStatus.Size = new Size(0, 18);
@@ -184,7 +186,7 @@
             // 
             LbPercentage.AutoSize = true;
             LbPercentage.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbPercentage.Location = new Point(370, 392);
+            LbPercentage.Location = new Point(370, 394);
             LbPercentage.Margin = new Padding(4, 0, 4, 0);
             LbPercentage.Name = "LbPercentage";
             LbPercentage.Size = new Size(0, 25);
@@ -194,7 +196,7 @@
             // 
             LbVideoTitle.AutoEllipsis = true;
             LbVideoTitle.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbVideoTitle.Location = new Point(90, 76);
+            LbVideoTitle.Location = new Point(90, 78);
             LbVideoTitle.Margin = new Padding(4, 0, 4, 0);
             LbVideoTitle.Name = "LbVideoTitle";
             LbVideoTitle.Size = new Size(519, 40);
@@ -205,7 +207,7 @@
             // 
             LbTagTitle.AutoSize = true;
             LbTagTitle.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbTagTitle.Location = new Point(9, 76);
+            LbTagTitle.Location = new Point(9, 78);
             LbTagTitle.Margin = new Padding(4, 0, 4, 0);
             LbTagTitle.Name = "LbTagTitle";
             LbTagTitle.Size = new Size(36, 16);
@@ -217,7 +219,7 @@
             // 
             LbTagChannelName.AutoSize = true;
             LbTagChannelName.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbTagChannelName.Location = new Point(9, 54);
+            LbTagChannelName.Location = new Point(9, 56);
             LbTagChannelName.Margin = new Padding(4, 0, 4, 0);
             LbTagChannelName.Name = "LbTagChannelName";
             LbTagChannelName.Size = new Size(59, 16);
@@ -229,7 +231,7 @@
             // 
             LbChannelName.AutoEllipsis = true;
             LbChannelName.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
-            LbChannelName.Location = new Point(90, 54);
+            LbChannelName.Location = new Point(90, 56);
             LbChannelName.Margin = new Padding(4, 0, 4, 0);
             LbChannelName.Name = "LbChannelName";
             LbChannelName.Size = new Size(519, 18);
@@ -242,54 +244,61 @@
             RbVideoAudio.Checked = true;
             RbVideoAudio.Enabled = false;
             RbVideoAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbVideoAudio.Location = new Point(110, 149);
+            RbVideoAudio.Location = new Point(110, 151);
             RbVideoAudio.Margin = new Padding(4, 3, 4, 3);
             RbVideoAudio.Name = "RbVideoAudio";
             RbVideoAudio.Size = new Size(155, 24);
             RbVideoAudio.TabIndex = 3;
             RbVideoAudio.TabStop = true;
+            RbVideoAudio.Tag = "";
             RbVideoAudio.Text = "Best Video+Audio";
             RbVideoAudio.UseVisualStyleBackColor = true;
             RbVideoAudio.Visible = false;
+            RbVideoAudio.MouseHover += RbVideoAudio_MouseHover;
             // 
             // RbVideo
             // 
             RbVideo.AutoSize = true;
             RbVideo.Enabled = false;
             RbVideo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbVideo.Location = new Point(318, 149);
+            RbVideo.Location = new Point(318, 151);
             RbVideo.Margin = new Padding(4, 3, 4, 3);
             RbVideo.Name = "RbVideo";
             RbVideo.Size = new Size(105, 24);
             RbVideo.TabIndex = 4;
+            RbVideo.Tag = "";
             RbVideo.Text = "Best Video";
             RbVideo.UseVisualStyleBackColor = true;
             RbVideo.Visible = false;
+            RbVideo.MouseHover += RbVideo_MouseHover;
             // 
             // RbAudio
             // 
             RbAudio.AutoSize = true;
             RbAudio.Enabled = false;
             RbAudio.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbAudio.Location = new Point(476, 149);
+            RbAudio.Location = new Point(476, 151);
             RbAudio.Margin = new Padding(4, 3, 4, 3);
             RbAudio.Name = "RbAudio";
             RbAudio.Size = new Size(105, 24);
             RbAudio.TabIndex = 5;
+            RbAudio.Tag = "";
             RbAudio.Text = "Best Audio";
             RbAudio.UseVisualStyleBackColor = true;
             RbAudio.Visible = false;
+            RbAudio.MouseHover += RbAudio_MouseHover;
             // 
             // RbCustom
             // 
             RbCustom.AutoSize = true;
             RbCustom.Enabled = false;
             RbCustom.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            RbCustom.Location = new Point(634, 149);
+            RbCustom.Location = new Point(634, 151);
             RbCustom.Margin = new Padding(4, 3, 4, 3);
             RbCustom.Name = "RbCustom";
             RbCustom.Size = new Size(82, 24);
             RbCustom.TabIndex = 6;
+            RbCustom.Tag = "";
             RbCustom.Text = "Custom";
             RbCustom.UseVisualStyleBackColor = true;
             RbCustom.Visible = false;
@@ -301,7 +310,7 @@
             PBFetchRuning.BackgroundImageLayout = ImageLayout.None;
             PBFetchRuning.Enabled = false;
             PBFetchRuning.Image = (Image)resources.GetObject("PBFetchRuning.Image");
-            PBFetchRuning.Location = new Point(304, 161);
+            PBFetchRuning.Location = new Point(304, 163);
             PBFetchRuning.Margin = new Padding(4, 3, 4, 3);
             PBFetchRuning.Name = "PBFetchRuning";
             PBFetchRuning.Size = new Size(132, 132);
@@ -314,7 +323,7 @@
             // 
             lbFetchingInfo.AutoSize = true;
             lbFetchingInfo.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            lbFetchingInfo.Location = new Point(299, 304);
+            lbFetchingInfo.Location = new Point(299, 306);
             lbFetchingInfo.Margin = new Padding(4, 0, 4, 0);
             lbFetchingInfo.Name = "lbFetchingInfo";
             lbFetchingInfo.Size = new Size(142, 20);
@@ -322,11 +331,23 @@
             lbFetchingInfo.Text = "Fetching video info";
             lbFetchingInfo.Visible = false;
             // 
+            // PBSettings
+            // 
+            PBSettings.Image = (Image)resources.GetObject("PBSettings.Image");
+            PBSettings.Location = new Point(698, 428);
+            PBSettings.Name = "PBSettings";
+            PBSettings.Size = new Size(32, 32);
+            PBSettings.SizeMode = PictureBoxSizeMode.Zoom;
+            PBSettings.TabIndex = 23;
+            PBSettings.TabStop = false;
+            PBSettings.Click += PBSettings_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(741, 455);
+            ClientSize = new Size(741, 472);
+            Controls.Add(PBSettings);
             Controls.Add(lbFetchingInfo);
             Controls.Add(PBFetchRuning);
             Controls.Add(RbCustom);
@@ -358,6 +379,7 @@
             FormClosing += FormMain_FormClosing;
             Shown += FormMain_Shown;
             ((System.ComponentModel.ISupportInitialize)PBFetchRuning).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PBSettings).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -386,5 +408,6 @@
         private RadioButton RbCustom;
         private PictureBox PBFetchRuning;
         private Label lbFetchingInfo;
+        private PictureBox PBSettings;
     }
 }

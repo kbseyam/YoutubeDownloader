@@ -214,6 +214,20 @@ namespace YoutubeDownloader {
 
         }
 
+        private RadioButton GetCheakedRbFormat() {
+            if (RbVideoAudio.Checked) {
+                return RbVideoAudio;
+            }
+            if (RbVideo.Checked) {
+                return RbVideo;
+            }
+            if (RbAudio.Checked) {
+                return RbAudio;
+            }
+
+            return RbCustom;
+        }
+
         private Format? GetSelectedVideoFormat() {
             if (media == null) {
                 return null;
@@ -221,7 +235,7 @@ namespace YoutubeDownloader {
             if (RbCustom.Checked && ChkVideo.Checked) {
                 return CbVideo.SelectedItem as Format;
             }
-            if ((RbVideo.Checked || RbVideoAudio.Checked)) {
+            if (RbVideo.Checked || RbVideoAudio.Checked) {
                 return media.BestFormats[0];
             }
 
@@ -235,7 +249,7 @@ namespace YoutubeDownloader {
             if (RbCustom.Checked && ChkAudio.Checked) {
                 return CbAudio.SelectedItem as Format;
             }
-            if ((RbAudio.Checked || RbVideoAudio.Checked)) {
+            if (RbAudio.Checked || RbVideoAudio.Checked) {
                 return media.BestFormats[1];
             }
 
@@ -337,6 +351,43 @@ namespace YoutubeDownloader {
                 BtnFetch.PerformClick();
             }
 
+        }
+
+        private void PBSettings_Click(object sender, EventArgs e) {
+            RadioButton cheakedRadioButton = GetCheakedRbFormat();
+            bool chkVideoIsCheacked = ChkVideo.Checked;
+            bool chkAudioIsCheacked = ChkAudio.Checked;
+            int videoFormatIndex = CbVideo.SelectedIndex;
+            int audioFormatIndex = CbAudio.SelectedIndex;
+
+            FormSettings formSettings = new();
+            formSettings.ShowDialog();
+
+            RefreshControls();
+            cheakedRadioButton.Checked = true;
+            ChkVideo.Checked = chkVideoIsCheacked;
+            ChkAudio.Checked = chkAudioIsCheacked;
+            CbVideo.SelectedIndex = videoFormatIndex;
+            CbAudio.SelectedIndex = audioFormatIndex;
+        }
+
+        private void RbVideoAudio_MouseHover(object sender, EventArgs e) {
+            if (media != null) {
+                new ToolTip().SetToolTip(RbVideoAudio, $"Video: {media.BestFormats[0].VideoFormatString}\n" +
+                    $"Audio: {media.BestFormats[1].AudioFormatString}");
+            }
+        }
+
+        private void RbVideo_MouseHover(object sender, EventArgs e) {
+            if (media != null) {
+                new ToolTip().SetToolTip(RbVideo, media.BestFormats[0].VideoFormatString);
+            }
+        }
+
+        private void RbAudio_MouseHover(object sender, EventArgs e) {
+            if (media != null) {
+                new ToolTip().SetToolTip(RbAudio, media.BestFormats[1].AudioFormatString);
+            }
         }
     }
 }

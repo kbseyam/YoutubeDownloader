@@ -1284,6 +1284,19 @@
         AAAAAAAAAAAAAAAAAAA=
 </value>
   </data>
+  <data name="PBSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABGdBTUEAALGPC/xhBQAAAdFJREFUaEPt
+        V9ttxDAMyygdpaN0lG7SUTpKR2nNAAJUQydRcs6njxAgkOAcWS/TuuPGjT54H/wh+THYDp+DvySxth2+
+        Bi1nLWJtO3wPWs5axNp2sBz12Apvg5aTHvHN0yGOoeRQmUfIHGChp0TYS87UUqBzX8+B4DnT+zNnewjK
+        2rMEGNaGNGE0ozoRYQv3g/UbWLo3PIO7CV9SrVTp6WeTvvwqirKLVBU6Zl8YVqFz9oVuFVYkUSjTpt4I
+        iobsXSEMrqyuSmOk2QhqNUnhIIhsVTIVOa9RrYS+9FwgU5lNsDaDrP1Mcv6B7VtaoxXYdl3+98ZsRJdW
+        AY5ZtjTDfmfABFCBN2sJtwXgavMD4BvLlua2ANq2EKvZlUOMbyxbM7EuXWF8kL1wMpsw7aMJX2j7TGkt
+        ZqqQTY4wlNSqYWGUqUplZ7rngjmwDFENHGw4DCJzV9l2A8Bm1TllF70Kn2DV4RWkz1nHKqQGxo5VyKjc
+        iU5VSGVf4A1bMAg1uCrIyFZlVDkxazbetTE8r+g6Yw/vZYisIkNeFiq3t3erSiDYO5TNCIwBrLGc9Mja
+        3YbseWiHTABY2w6ZWcedZ16FzEFOX0o7gADQGgw9RbtxYx+O4w9rL/k0hQHY1wAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAEBAAAAEAIABoBAAAZgAAACAgAAABACAAqBAAAM4EAAAwMAAAAQAgAKglAAB2FQAAQEAAAAEA

@@ -8,8 +8,7 @@ namespace YoutubeDownloader {
             VIDEO, AUDIO, UNKNOWN
         }
 
-        [DefaultValue("")]
-        [JsonProperty(PropertyName = "format_id", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [JsonProperty(PropertyName = "format_id")]
         public string FormatID { get; private set; }
 
         [JsonProperty(PropertyName = "ext")]
@@ -32,6 +31,9 @@ namespace YoutubeDownloader {
 
         [JsonProperty(PropertyName = "asr")]
         public int? Asr { get; private set; }
+
+        [JsonProperty(PropertyName = "audio_channels")]
+        public int? NumberOfAudioChannels { get; private set; }
 
         public Type FormatType {
             get {
@@ -60,7 +62,26 @@ namespace YoutubeDownloader {
 
         public string VideoFormatString {
             get {
-                return $"{Resolution} | {Convert.ToInt16(Fps)} fps | {DynamicRange} | {Ext}";
+                string formatString = string.Empty;
+                if (Properties.Settings.Default.ShowVideoID) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? $"ID: {FormatID}" : $" | ID: {FormatID}";
+                }
+                if (Properties.Settings.Default.ShowResolution) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? Resolution : $" | {Resolution}";
+                }
+                if (Properties.Settings.Default.ShowFps) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? $"FPS: {Fps}" : $" | FPS: {Fps}";
+                }
+                if (Properties.Settings.Default.ShowDynamicRange) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? DynamicRange : $" | {DynamicRange}";
+                }
+                if (Properties.Settings.Default.ShowVideoFileExtension) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? Ext : $" | {Ext}";
+                }
+                if (Properties.Settings.Default.ShowVideoCodec) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? $"Codec: {Vcodec}" : $" | Codec: {Vcodec}";
+                }
+                return formatString;
             }
         }
 
@@ -68,7 +89,25 @@ namespace YoutubeDownloader {
 
         public string AudioFormatString {
             get {
-                return $"{Acodec} | {Asr / 1000}kHz";
+                string formatString = string.Empty;
+                if (Properties.Settings.Default.ShowAudioID) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? $"ID: {FormatID}" : $" | ID: {FormatID}";
+                }
+                if (Properties.Settings.Default.ShowASR) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? $"ASR: {Asr / 1000}kHz" : $" | ASR: {Asr / 1000}kHz";
+                }
+                if (Properties.Settings.Default.ShowNumberOfAudioChannels) {
+                    if (NumberOfAudioChannels == 1) {
+                        formatString += (string.IsNullOrEmpty(formatString)) ? $"{NumberOfAudioChannels} Channel" : $" | {NumberOfAudioChannels} Channel";
+                    } else {
+                        formatString += (string.IsNullOrEmpty(formatString)) ? $"{NumberOfAudioChannels} Channels" : $" | {NumberOfAudioChannels} Channels";
+                    }
+                }
+                if (Properties.Settings.Default.ShowAudioCodec) {
+                    formatString += (string.IsNullOrEmpty(formatString)) ? $"Codec: {Acodec}" : $" | Codec: {Acodec}";
+                }
+
+                return formatString;
             }
         }
 
