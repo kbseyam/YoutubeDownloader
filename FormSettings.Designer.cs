@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             BtnSave = new Button();
             label1 = new Label();
@@ -33,18 +34,19 @@
             ChkFps = new CheckBox();
             ChkDynamicRange = new CheckBox();
             label2 = new Label();
-            label3 = new Label();
             ChkNumOfChannels = new CheckBox();
             ChkAsr = new CheckBox();
             ChkAudioCodec = new CheckBox();
             ChkAudioID = new CheckBox();
             label4 = new Label();
+            toolTip1 = new ToolTip(components);
+            label3 = new Label();
             SuspendLayout();
             // 
             // BtnSave
             // 
             BtnSave.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            BtnSave.Location = new Point(687, 391);
+            BtnSave.Location = new Point(285, 252);
             BtnSave.Name = "BtnSave";
             BtnSave.Size = new Size(101, 47);
             BtnSave.TabIndex = 0;
@@ -81,7 +83,9 @@
             ChkVideoExtension.Name = "ChkVideoExtension";
             ChkVideoExtension.Size = new Size(91, 24);
             ChkVideoExtension.TabIndex = 5;
+            ChkVideoExtension.Tag = "";
             ChkVideoExtension.Text = "Extension";
+            toolTip1.SetToolTip(ChkVideoExtension, "File extension");
             ChkVideoExtension.UseVisualStyleBackColor = true;
             // 
             // ChkVideoCodec
@@ -114,7 +118,9 @@
             ChkFps.Name = "ChkFps";
             ChkFps.Size = new Size(51, 24);
             ChkFps.TabIndex = 8;
+            ChkFps.Tag = "";
             ChkFps.Text = "FPS";
+            toolTip1.SetToolTip(ChkFps, "Frames Per Second");
             ChkFps.UseVisualStyleBackColor = true;
             // 
             // ChkDynamicRange
@@ -131,24 +137,16 @@
             // label2
             // 
             label2.BorderStyle = BorderStyle.Fixed3D;
-            label2.Location = new Point(208, 9);
+            label2.Location = new Point(196, 9);
             label2.Name = "label2";
             label2.Size = new Size(1, 213);
             label2.TabIndex = 10;
-            // 
-            // label3
-            // 
-            label3.BorderStyle = BorderStyle.Fixed3D;
-            label3.Location = new Point(440, 9);
-            label3.Name = "label3";
-            label3.Size = new Size(1, 213);
-            label3.TabIndex = 18;
             // 
             // ChkNumOfChannels
             // 
             ChkNumOfChannels.AutoSize = true;
             ChkNumOfChannels.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ChkNumOfChannels.Location = new Point(261, 123);
+            ChkNumOfChannels.Location = new Point(225, 123);
             ChkNumOfChannels.Name = "ChkNumOfChannels";
             ChkNumOfChannels.Size = new Size(161, 24);
             ChkNumOfChannels.TabIndex = 16;
@@ -157,20 +155,23 @@
             // 
             // ChkAsr
             // 
+            ChkAsr.AccessibleName = "";
             ChkAsr.AutoSize = true;
             ChkAsr.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ChkAsr.Location = new Point(261, 93);
+            ChkAsr.Location = new Point(225, 93);
             ChkAsr.Name = "ChkAsr";
             ChkAsr.Size = new Size(55, 24);
             ChkAsr.TabIndex = 15;
+            ChkAsr.Tag = "";
             ChkAsr.Text = "ASR";
+            toolTip1.SetToolTip(ChkAsr, "Audio Sampling Rate");
             ChkAsr.UseVisualStyleBackColor = true;
             // 
             // ChkAudioCodec
             // 
             ChkAudioCodec.AutoSize = true;
             ChkAudioCodec.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ChkAudioCodec.Location = new Point(261, 63);
+            ChkAudioCodec.Location = new Point(225, 63);
             ChkAudioCodec.Name = "ChkAudioCodec";
             ChkAudioCodec.Size = new Size(70, 24);
             ChkAudioCodec.TabIndex = 14;
@@ -181,7 +182,7 @@
             // 
             ChkAudioID.AutoSize = true;
             ChkAudioID.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            ChkAudioID.Location = new Point(261, 33);
+            ChkAudioID.Location = new Point(225, 33);
             ChkAudioID.Name = "ChkAudioID";
             ChkAudioID.Size = new Size(94, 24);
             ChkAudioID.TabIndex = 12;
@@ -192,17 +193,25 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(244, 9);
+            label4.Location = new Point(208, 9);
             label4.Name = "label4";
             label4.Size = new Size(163, 21);
             label4.TabIndex = 11;
             label4.Text = "Show in audio format:";
             // 
+            // label3
+            // 
+            label3.BorderStyle = BorderStyle.Fixed3D;
+            label3.Location = new Point(6, 233);
+            label3.Name = "label3";
+            label3.Size = new Size(380, 1);
+            label3.TabIndex = 17;
+            // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(393, 305);
             Controls.Add(label3);
             Controls.Add(ChkNumOfChannels);
             Controls.Add(ChkAsr);
@@ -222,6 +231,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "FormSettings";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Settings - Youtube downloader";
             Load += FormSettings_Load;
             ResumeLayout(false);
@@ -239,11 +249,12 @@
         private CheckBox ChkFps;
         private CheckBox ChkDynamicRange;
         private Label label2;
-        private Label label3;
         private CheckBox ChkNumOfChannels;
         private CheckBox ChkAsr;
         private CheckBox ChkAudioCodec;
         private CheckBox ChkAudioID;
         private Label label4;
+        private ToolTip toolTip1;
+        private Label label3;
     }
 }

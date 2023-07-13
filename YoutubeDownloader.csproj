@@ -10,6 +10,7 @@
     <ApplicationIcon>YD_Icon.ico</ApplicationIcon>
     <PlatformTarget>x64</PlatformTarget>
     <Authors>kbseyam</Authors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

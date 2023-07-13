@@ -15,6 +15,27 @@ namespace YoutubeDownloader {
             InitializeComponent();
         }
 
+        private void CancelDownload() {
+            if (Utils.Process != null) {
+                if (!Utils.Process.HasExited) {
+                    Process? ytdlpProcess = Utils.Process.GetChildProcesses().Find(p => p.ProcessName == "yt-dlp");
+                    if (ytdlpProcess != null) {
+                        List<Process> childProcesses = ytdlpProcess.GetChildProcesses();
+
+                        foreach (Process childProcess in childProcesses) {
+                            childProcess.Kill();
+                            childProcess.WaitForExit();
+                            childProcess.Dispose();
+                        }
+                        if (media != null) {
+                            Utils.RemoveFilesStartsWith(media.Guid);
+                        }
+                    }
+
+                }
+            }
+        }
+
         private void SetSlecetedIndexSafe(ComboBox comboBox, int index) {
             if (comboBox.InvokeRequired) {
                 if (!stopInvoking) {
@@ -140,6 +161,8 @@ namespace YoutubeDownloader {
             RefreshDownloadPercentage(0);
             SaveFileDialog1.Reset();
             BtnDownload.Enabled = media != null;
+            BtnPauseResume.Tag = "Pause download";
+            BtnPauseResume.BackgroundImage = Properties.Resources.PauseIcon;
         }
 
         private void RefreshVideoInfoControls() {
@@ -269,7 +292,7 @@ namespace YoutubeDownloader {
             RefreshControls(false);
 
             if (media == null) {
-                MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0x40000);
             }
         }
 
@@ -289,6 +312,8 @@ namespace YoutubeDownloader {
                 downloadPreferences.path = SaveFileDialog1.FileName;
                 SetTextSafe(LbDownloadStatus, "Starting download");
 
+                BtnPauseResume.Visible = true;
+                BtnCancelDownload.Visible = true;
                 await Task.Run(() => {
                     if (media != null && downloadPreferences != null) {
                         media.Download(downloadPreferences,
@@ -297,6 +322,8 @@ namespace YoutubeDownloader {
                         MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 });
+                BtnPauseResume.Visible = false;
+                BtnCancelDownload.Visible = false;
             }
 
         }
@@ -317,24 +344,7 @@ namespace YoutubeDownloader {
         }
 
         private async void FormMain_FormClosing(object sender, FormClosingEventArgs e) {
-            if (Utils.Process != null) {
-                if (!Utils.Process.HasExited) {
-                    Process? ytdlpProcess = Utils.Process.GetChildProcesses().Find(p => p.ProcessName == "yt-dlp");
-                    if (ytdlpProcess != null) {
-                        List<Process> childProcesses = ytdlpProcess.GetChildProcesses();
-
-                        foreach (Process childProcess in childProcesses) {
-                            childProcess.Kill();
-                            childProcess.WaitForExit();
-                            childProcess.Dispose();
-                        }
-                        if (media != null) {
-                            Utils.RemoveFilesStartsWith(media.Guid);
-                        }
-                    }
-
-                }
-            }
+            CancelDownload();
 
             if (invokeInProgress) {
                 e.Cancel = true;
@@ -373,20 +383,55 @@ namespace YoutubeDownloader {
 
         private void RbVideoAudio_MouseHover(object sender, EventArgs e) {
             if (media != null) {
-                new ToolTip().SetToolTip(RbVideoAudio, $"Video: {media.BestFormats[0].VideoFormatString}\n" +
+                toolTip1.SetToolTip(RbVideoAudio, $"Video: {media.BestFormats[0].VideoFormatString}\n" +
                     $"Audio: {media.BestFormats[1].AudioFormatString}");
             }
         }
 
         private void RbVideo_MouseHover(object sender, EventArgs e) {
             if (media != null) {
-                new ToolTip().SetToolTip(RbVideo, media.BestFormats[0].VideoFormatString);
+                toolTip1.SetToolTip(RbVideo, media.BestFormats[0].VideoFormatString);
             }
         }
 
         private void RbAudio_MouseHover(object sender, EventArgs e) {
             if (media != null) {
-                new ToolTip().SetToolTip(RbAudio, media.BestFormats[1].AudioFormatString);
+                toolTip1.SetToolTip(RbAudio, media.BestFormats[1].AudioFormatString);
+            }
+        }
+
+        private void BtnPauseResume_Click(object sender, EventArgs e) {
+            if (Utils.Process != null) {
+                if (!Utils.Process.HasExited) {
+                    Process? ytdlpProcess = Utils.Process.GetChildProcesses().Find(p => p.ProcessName == "yt-dlp");
+                    if (ytdlpProcess != null) {
+                        List<Process> childProcesses = ytdlpProcess.GetChildProcesses();
+                        if (BtnPauseResume.Tag!.ToString() == "Pause download") {
+                            foreach (Process childProcess in childProcesses) {
+                                childProcess.Suspend();
+                            }
+                            BtnPauseResume.Tag = "Resume download";
+                            BtnPauseResume.BackgroundImage = Properties.Resources.ResumeIcon;
+                        } else if (BtnPauseResume.Tag!.ToString() == "Resume download") {
+                            foreach (Process childProcess in childProcesses) {
+                                childProcess.Resume();
+                            }
+                            BtnPauseResume.Tag = "Pause download";
+                            BtnPauseResume.BackgroundImage = Properties.Resources.PauseIcon;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void BtnPauseResume_MouseHover(object sender, EventArgs e) {
+            toolTip1.SetToolTip(BtnPauseResume, BtnPauseResume.Tag!.ToString());
+        }
+
+        private async void BtnCancelDownload_ClickAsync(object sender, EventArgs e) {
+            if (MessageBox.Show("Cancel download", string.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+                await Task.Run(() => CancelDownload());
+                ResetDownloadControls();
             }
         }
     }

@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             LbTagURL = new Label();
             TbURL = new TextBox();
@@ -47,6 +48,9 @@
             PBFetchRuning = new PictureBox();
             lbFetchingInfo = new Label();
             PBSettings = new PictureBox();
+            toolTip1 = new ToolTip(components);
+            BtnCancelDownload = new Button();
+            BtnPauseResume = new Button();
             ((System.ComponentModel.ISupportInitialize)PBFetchRuning).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PBSettings).BeginInit();
             SuspendLayout();
@@ -172,7 +176,7 @@
             // 
             LbDownloadStatus.AutoSize = true;
             LbDownloadStatus.Font = new Font("Microsoft Sans Serif", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            LbDownloadStatus.Location = new Point(12, 294);
+            LbDownloadStatus.Location = new Point(13, 338);
             LbDownloadStatus.Margin = new Padding(4, 0, 4, 0);
             LbDownloadStatus.Name = "LbDownloadStatus";
             LbDownloadStatus.Size = new Size(0, 18);
@@ -342,11 +346,43 @@
             PBSettings.TabStop = false;
             PBSettings.Click += PBSettings_Click;
             // 
+            // BtnCancelDownload
+            // 
+            BtnCancelDownload.BackgroundImage = Properties.Resources.CancelIcon;
+            BtnCancelDownload.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnCancelDownload.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            BtnCancelDownload.Location = new Point(67, 398);
+            BtnCancelDownload.Name = "BtnCancelDownload";
+            BtnCancelDownload.Size = new Size(32, 32);
+            BtnCancelDownload.TabIndex = 25;
+            BtnCancelDownload.Tag = "Cancel download";
+            toolTip1.SetToolTip(BtnCancelDownload, "Cancel download");
+            BtnCancelDownload.UseVisualStyleBackColor = true;
+            BtnCancelDownload.Visible = false;
+            BtnCancelDownload.Click += BtnCancelDownload_ClickAsync;
+            // 
+            // BtnPauseResume
+            // 
+            BtnPauseResume.BackgroundImage = Properties.Resources.PauseIcon;
+            BtnPauseResume.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnPauseResume.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            BtnPauseResume.Location = new Point(13, 398);
+            BtnPauseResume.Name = "BtnPauseResume";
+            BtnPauseResume.Size = new Size(32, 32);
+            BtnPauseResume.TabIndex = 24;
+            BtnPauseResume.Tag = "Pause download";
+            BtnPauseResume.UseVisualStyleBackColor = true;
+            BtnPauseResume.Visible = false;
+            BtnPauseResume.Click += BtnPauseResume_Click;
+            BtnPauseResume.MouseHover += BtnPauseResume_MouseHover;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(741, 472);
+            Controls.Add(BtnCancelDownload);
+            Controls.Add(BtnPauseResume);
             Controls.Add(PBSettings);
             Controls.Add(lbFetchingInfo);
             Controls.Add(PBFetchRuning);
@@ -409,5 +445,8 @@
         private PictureBox PBFetchRuning;
         private Label lbFetchingInfo;
         private PictureBox PBSettings;
+        private ToolTip toolTip1;
+        private Button BtnPauseResume;
+        private Button BtnCancelDownload;
     }
 }

@@ -99,8 +99,8 @@ namespace YoutubeDownloader {
                         }
                     }
                 }
-
             };
+            
             Process.Start();
             Process.BeginOutputReadLine();
             Process.WaitForExit();
