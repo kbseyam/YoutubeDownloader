@@ -8,6 +8,11 @@ namespace YoutubeDownloader {
         private delegate void SafeCallDelgate_ComboBox_Index(ComboBox comboBox, int index);
         private delegate void SafeCallDelgate_STRING(Control control, string text);
 
+        ///<summary>
+        ///Use this for save download status before pause download.
+        ///</summary>
+        private string lastDownloadStatus = string.Empty;
+
         private YoutubeMedia? media;
         private DownloadPreferences? downloadPreferences;
 
@@ -292,7 +297,7 @@ namespace YoutubeDownloader {
             RefreshControls(false);
 
             if (media == null) {
-                MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0x40000);
+                CenteredMessageBox.Show(this, "ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -300,7 +305,8 @@ namespace YoutubeDownloader {
             ResetDownloadControls();
 
             if (media == null) {
-                MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                CenteredMessageBox.Show(this, "ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return;
             }
 
@@ -319,7 +325,7 @@ namespace YoutubeDownloader {
                         media.Download(downloadPreferences,
                         OnDownloadCommandOutput);
                     } else {
-                        MessageBox.Show("ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        CenteredMessageBox.Show(this, "ERROR", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 });
                 BtnPauseResume.Visible = false;
@@ -412,10 +418,14 @@ namespace YoutubeDownloader {
                             }
                             BtnPauseResume.Tag = "Resume download";
                             BtnPauseResume.BackgroundImage = Properties.Resources.ResumeIcon;
+                            lastDownloadStatus = LbDownloadStatus.Text;
+                            LbDownloadStatus.Text = "Download is pausing";
                         } else if (BtnPauseResume.Tag!.ToString() == "Resume download") {
                             foreach (Process childProcess in childProcesses) {
                                 childProcess.Resume();
                             }
+                            LbDownloadStatus.Text = lastDownloadStatus;
+                            lastDownloadStatus = string.Empty;
                             BtnPauseResume.Tag = "Pause download";
                             BtnPauseResume.BackgroundImage = Properties.Resources.PauseIcon;
                         }
@@ -429,7 +439,7 @@ namespace YoutubeDownloader {
         }
 
         private async void BtnCancelDownload_ClickAsync(object sender, EventArgs e) {
-            if (MessageBox.Show("Cancel download", string.Empty, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
+            if (CenteredMessageBox.Show(this, "Cancel download", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes) {
                 await Task.Run(() => CancelDownload());
                 ResetDownloadControls();
             }
